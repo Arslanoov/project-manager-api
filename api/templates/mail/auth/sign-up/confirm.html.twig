@@ -1,0 +1,13 @@
+{% extends 'layouts/mail.html.twig' %}
+
+{% block body %}
+    <h3>TODO</h3>
+    <p style="margin: 0 0 10px 0">Confirm your sign up:</p>
+
+    {% set url = frontend_url_build('auth/sign-up/confirm/' ~ token.value) %}
+    <p style="margin: 0">
+        <a style="color: #1a8aee; text-decoration: none" href="{{ url }}">
+            <span style="color: #1a8aee; text-decoration: underline">{{ url }}</span>
+        </a>
+    </p>
+{% endblock %}
