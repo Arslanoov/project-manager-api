@@ -33,7 +33,7 @@ final class PathMiddlewareDecorator implements MiddlewareInterface
         }
 
         $border = $this->getBorder($path);
-        if ($border && '/' !== $border) {
+        if ($border and '/' !== $border) {
             return $handler->handle($request);
         }
 

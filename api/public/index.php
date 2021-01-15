@@ -2,39 +2,39 @@
 
 declare(strict_types=1);
 
-use Framework\Http\Application;
-use Furious\HttpRunner\Runner;
-use Laminas\Diactoros\ServerRequestFactory;
-use Psr\Container\ContainerInterface;
+use Framework\Http\ApplicationInterface;
+use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7Server\ServerRequestCreator;
 use Symfony\Component\Dotenv\Dotenv;
 
 chdir(dirname(__DIR__));
-require 'vendor/autoload.php';
+
+require './vendor/autoload.php';
 
 if (file_exists('.env')) {
     (new Dotenv(true))->load('.env');
 }
 
-if (getenv('SENTRY_DSN')) {
-    Sentry\init(['dsn' => getenv('SENTRY_DSN')]);
-}
+(static function () {
+    $container = require './config/container.php';
 
-(function () {
-    /** @var ContainerInterface $container */
-    $container = require 'config/container.php';
+    $application = $container->get(ApplicationInterface::class);
 
-    /** @var Application $app */
-    $app = $container->get(Application::class);
+    (require './config/app/routes/index.php')($application);
+    (require './config/app/pipeline/index.php')($application);
 
-    (require 'config/pipeline.php')($app);
-    (require 'config/routes.php')($app);
+    $psr17Factory = new Psr17Factory();
 
-    $request = (new ServerRequestFactory())->fromGlobals();
-    $response = $app->handle($request);
+    $creator = new ServerRequestCreator(
+        $psr17Factory, // ServerRequestFactory
+        $psr17Factory, // UriFactory
+        $psr17Factory, // UploadedFileFactory
+        $psr17Factory  // StreamFactory
+    );
 
-    $response =
-        $response->withHeader('X-Developer', 'Arslanoov');
+    $serverRequest = $creator->fromGlobals();
+    $response = $application->run($serverRequest);
 
-    $runner = new Runner();
-    $runner->run($response);
+    (new SapiEmitter())->emit($response);
 })();

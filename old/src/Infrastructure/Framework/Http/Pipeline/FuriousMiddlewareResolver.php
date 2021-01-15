@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Infrastructure\Framework\Http\Pipeline;
 
-use Framework\Http\Pipeline\Exception\UnknownMiddlewareType;
-use Framework\Http\Pipeline\Middleware\LazyMiddlewareDecorator;
-use Framework\Http\Pipeline\Middleware\SinglePassDecoratorMiddleware;
-use Framework\Http\Pipeline\MiddlewarePipelineInterface;
+use Framework\Http\Middleware\LazyMiddlewareDecorator;
+use Framework\Http\Middleware\SinglePassDecoratorMiddleware;
+use Framework\Http\Pipeline\MiddlewarePipeInterface;
 use Framework\Http\Pipeline\MiddlewareResolverInterface;
+use Framework\Http\Pipeline\UnknownMiddlewareTypeException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -27,6 +27,10 @@ class FuriousMiddlewareResolver implements MiddlewareResolverInterface
         $this->container = $container;
     }
 
+    /**
+     * @param mixed $handler
+     * @return MiddlewareInterface|MiddlewarePipeInterface|string
+     */
     public function resolve($handler)
     {
         if (is_array($handler)) {
@@ -49,19 +53,14 @@ class FuriousMiddlewareResolver implements MiddlewareResolverInterface
             }
         }
 
-        /** @var string $handler */
-        throw new UnknownMiddlewareType($handler);
+        throw new UnknownMiddlewareTypeException($handler);
     }
 
-    private function createPipe(array $handlers): MiddlewarePipelineInterface
+    private function createPipe(array $handlers): MiddlewarePipeInterface
     {
-        /** @var MiddlewarePipelineInterface $pipeline */
-        $pipeline = $this->container->get(MiddlewarePipelineInterface::class);
-        /** @var array<string> $handler */
+        $pipeline = $this->container->get(MiddlewarePipeInterface::class);
         foreach ($handlers as $handler) {
-            /** @var MiddlewareInterface $middleware */
-            $middleware = $this->resolve($handler);
-            $pipeline->pipe($middleware);
+            $pipeline->pipe($this->resolve($handler));
         }
         return $pipeline;
     }

@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-use Laminas\ConfigAggregator\PhpFileProvider;
-use Laminas\ServiceManager\ServiceManager;
-use Laminas\ConfigAggregator\ConfigAggregator;
+use Acclimate\Container\ContainerAcclimator;
+use DI\ContainerBuilder;
 
-$dependencies = require(__DIR__ . '/dependencies.php');
-$params = require(__DIR__ . '/params.php');
+### PHP DI ###
+$phpDiContainerBuilder = new ContainerBuilder();
+$phpDiContainerBuilder->addDefinitions(require __DIR__ . '/dependencies.php');
+$phpDiContainer = $phpDiContainerBuilder->build();
 
-$container = new ServiceManager($dependencies);
-$container->setService('config', $params);
-
-return $container;
+$acclimator = new ContainerAcclimator();
+return $acclimator->acclimate($phpDiContainer);
