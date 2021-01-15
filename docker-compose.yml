@@ -12,7 +12,7 @@ services:
       context: ./api/docker
       dockerfile: dev/php-fpm.docker
     environment:
-      PHP_IDE_CONFIG: "serverName=API"
+      PHP_IDE_CONFIG: "serverName=api"
       SENTRY_DSN: null
       MAILER_HOST: mailer
       MAILER_PORT: 1025
