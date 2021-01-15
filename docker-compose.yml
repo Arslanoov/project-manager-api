@@ -1,18 +1,18 @@
 version: '3.7'
 services:
-  api-nginx:
+  new-nginx:
     build:
-      context: api/docker
+      context: new/docker
       dockerfile: dev/nginx.docker
     ports:
       - "8081:8081"
 
-  api-php-fpm:
+  new-php-fpm:
     build:
-      context: ./api/docker
+      context: ./new/docker
       dockerfile: dev/php-fpm.docker
     environment:
-      PHP_IDE_CONFIG: "serverName=API"
+      PHP_IDE_CONFIG: "serverName=new"
       SENTRY_DSN: null
       MAILER_HOST: mailer
       MAILER_PORT: 1025
@@ -22,13 +22,13 @@ services:
       MAILER_FROM_EMAIL: app@app.test
       TZ: "Asia/Yekaterinburg"
     volumes:
-      - ./api:/var/www/api
+      - ./new:/var/www/new
       - ./storage:/var/www/storage
     depends_on:
-      - api-postgres
-  api-php-cli:
+      - new-postgres
+  new-php-cli:
     build:
-      context: ./api/docker
+      context: ./new/docker
       dockerfile: dev/php-cli.docker
     environment:
       SENTRY_DSN: null
@@ -40,28 +40,28 @@ services:
       MAILER_FROM_EMAIL: app@app.test
       TZ: "Asia/Yekaterinburg"
     volumes:
-      - ./api:/var/www/api
+      - ./new:/var/www/new
       - ./storage:/var/www/storage
     depends_on:
-      - api-postgres
-    working_dir: /var/www/api
+      - new-postgres
+    working_dir: /var/www/new
     tty: true
-  api-postgres:
+  new-postgres:
     image: postgres:11.2-alpine
     volumes:
-      - api-postgres:/var/lib/postgresql/data
+      - new-postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: app
     ports:
       - "54321:5432"
-  api-docs-nginx:
+  new-docs-nginx:
     build:
-      context: ./api/docker
+      context: ./new/docker
       dockerfile: dev/nginx-swagger.docker
     volumes:
-      - ./api/public/docs:/docs
+      - ./new/public/docs:/docs
 
   mailer:
     image: mailhog/mailhog
@@ -70,5 +70,5 @@ services:
       - "8025:8025"
 
 volumes:
-  api-postgres:
+  new-postgres:
   composer:
