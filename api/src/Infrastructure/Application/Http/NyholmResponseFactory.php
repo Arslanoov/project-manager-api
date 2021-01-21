@@ -14,4 +14,9 @@ final class NyholmResponseFactory implements ResponseFactory
     {
         return new Response($code, [], json_encode($data));
     }
+
+    public function simple(int $code = 200): ResponseInterface
+    {
+        return new Response($code, []);
+    }
 }

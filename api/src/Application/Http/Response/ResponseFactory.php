@@ -9,4 +9,6 @@ use Psr\Http\Message\ResponseInterface;
 interface ResponseFactory
 {
     public function json(array $data, int $code = 200): ResponseInterface;
+
+    public function simple(int $code = 200): ResponseInterface;
 }

@@ -1,5 +1,0 @@
-FROM nginx:1.17-alpine
-
-ADD ./dev/swagger/nginx/conf.d /etc/nginx/conf.d/
-
-WORKDIR /var/www/api/public/docs

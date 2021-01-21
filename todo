@@ -1,0 +1,8 @@
+Framework v2:
+    Application handle make public
+    Middleware|string|null 2 times $app->pipe(url, middleware)
+    config/app ['app']
+    mailer config
+    app config
+
+php8

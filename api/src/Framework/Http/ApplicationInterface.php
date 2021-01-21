@@ -34,9 +34,9 @@ interface ApplicationInterface
 
     /**
      * @param mixed $path
-     * @param MiddlewareInterface|null $middleware
+     * @param MiddlewareInterface|string|null $middleware
      */
-    public function pipe($path, MiddlewareInterface $middleware = null): void;
+    public function pipe($path, MiddlewareInterface | string $middleware = null): void;
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface;
 

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Action\EnvAction;
 use App\Http\Action\NotFoundHandlerInterface;
 use App\Http\Middleware\ErrorHandler;
 use App\Http\Response\ResponseFactory;
@@ -22,10 +23,21 @@ return [
             $container->get('config')['app']['debug']
         );
     },
+    EnvAction::class => function (ContainerInterface $container) {
+        return new EnvAction(
+            $container->get('config')['app']['env'],
+            $container->get('config')['app']['debug'],
+            $container->get(ResponseFactory::class)
+        );
+    },
 
     'config' => [
         'app' => [
-            'debug' => getenv('DEBUG') === 'true'
+            'debug' => getenv('DEBUG') === 'true',
+            'frontend' => [
+                'url' => getenv('FRONTEND_URL') ?? 'http://localhost:8080'
+            ],
+            'env' => getenv('ENV') ?? 'prod'
         ]
     ]
 ];
