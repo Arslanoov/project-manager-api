@@ -83,9 +83,9 @@ final class Application implements ApplicationInterface
 
     /**
      * @param mixed $path
-     * @param MiddlewareInterface|null $middleware
+     * @param MiddlewareInterface|string|null $middleware
      */
-    public function pipe($path, MiddlewareInterface $middleware = null): void
+    public function pipe($path, MiddlewareInterface | string $middleware = null): void
     {
         if ($middleware === null) {
             /** @var MiddlewareInterface $middleware */
@@ -104,7 +104,7 @@ final class Application implements ApplicationInterface
         return $this->pipeline->process($request, $handler);
     }
 
-    private function handle(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->pipeline->handle($request);
     }

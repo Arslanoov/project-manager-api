@@ -1,7 +1,0 @@
-FROM nginx:1.17-alpine
-
-ADD ./docker/prod/nginx/conf.d /etc/nginx/conf.d/
-
-WORKDIR /var/www/api
-
-COPY ./public ./public
