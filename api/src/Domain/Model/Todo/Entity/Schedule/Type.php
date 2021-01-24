@@ -21,7 +21,6 @@ final class Type
     public function __construct(string $value)
     {
         Assert::notEmpty($value, 'Schedule type required');
-        Assert::string($value, 'Schedule type must be string');
         Assert::lengthBetween($value, 2, 16, 'Schedule type must be between 2 and 16 chars length');
         Assert::oneOf($value, self::types(), 'Incorrect type');
         $this->value = $value;

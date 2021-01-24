@@ -17,7 +17,6 @@ final class Description
     public function __construct(string $value)
     {
         Assert::notEmpty($value, 'Task description required');
-        Assert::string($value, 'Task description must be string');
         $this->value = $value;
     }
 

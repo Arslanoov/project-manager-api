@@ -79,10 +79,13 @@ final class CreateAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var array $body */
         $body = json_decode($request->getBody()->getContents(), true);
 
+        /** @var string $userId */
         $userId = $request->getAttribute('oauth_user_id');
         $id = $this->uuid->uuid4();
+        /** @var string $name */
         $name = $body['name'] ?? '';
 
         $this->validate->validate($command = new Command($id, $userId, $name));

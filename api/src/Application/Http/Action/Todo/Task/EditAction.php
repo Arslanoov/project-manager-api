@@ -80,15 +80,22 @@ final class EditAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var array $body */
         $body = json_decode($request->getBody()->getContents(), true);
 
+        /** @var string $taskId */
         $taskId = $body['id'] ?? '';
+        /** @var string $name */
         $name = $body['name'] ?? '';
+        /** @var string $description */
         $description = $body['description'] ?? '';
+        /** @var string $level */
         $level = $body['level'] ?? '';
 
+        /** @var string $userId */
+        $userId = $request->getAttribute('oauth_user_id');
         $task = $this->tasks->getById(new Id($taskId));
-        $this->canEditTask($request->getAttribute('oauth_user_id'), $task);
+        $this->canEditTask($userId, $task);
 
         $this->validator->validate($command = new Command($taskId, $name, $level, $description));
         $this->handler->handle($command);

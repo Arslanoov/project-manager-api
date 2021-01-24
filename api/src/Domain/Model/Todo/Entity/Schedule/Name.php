@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Model\Todo\Entity\Schedule;
 
+use JetBrains\PhpStorm\Pure;
 use Webmozart\Assert\Assert;
 
 final class Name
@@ -17,7 +18,6 @@ final class Name
     public function __construct(string $value)
     {
         Assert::notEmpty($value, 'Schedule name required');
-        Assert::string($value, 'Schedule name must be string');
         Assert::lengthBetween($value, 1, 32, 'Schedule name must be between 1 and 32 chars length');
         $this->value = $value;
     }
@@ -30,6 +30,7 @@ final class Name
         return $this->value;
     }
 
+    #[Pure]
     public function isEqual(Name $name): bool
     {
         return $this->value === $name->getValue();

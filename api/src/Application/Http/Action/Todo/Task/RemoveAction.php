@@ -77,11 +77,15 @@ final class RemoveAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var array $body */
         $body = json_decode($request->getBody()->getContents(), true);
+        /** @var string $taskId */
         $taskId = $body['task_id'] ?? '';
 
+        /** @var string $userId */
+        $userId = $request->getAttribute('oauth_user_id');
         $task = $this->tasks->getById(new Id($taskId));
-        $this->canRemoveTask($request->getAttribute('oauth_user_id'), $task);
+        $this->canRemoveTask($userId, $task);
 
         $this->validator->validate($command = new Command($taskId));
         $this->handler->handle($command);

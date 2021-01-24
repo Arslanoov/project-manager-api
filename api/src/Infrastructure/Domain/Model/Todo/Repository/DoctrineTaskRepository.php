@@ -6,7 +6,7 @@ namespace Infrastructure\Domain\Model\Todo\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Domain\Exception\Schedule\TaskNotFoundException;
+use Domain\Model\Exception\Schedule\TaskNotFoundException;
 use Domain\Model\Todo\Entity\Schedule\Task\Id;
 use Domain\Model\Todo\Entity\Schedule\Task\Task;
 use Domain\Model\Todo\Entity\Schedule\Task\TaskRepository;

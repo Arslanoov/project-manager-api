@@ -11,6 +11,7 @@ use App\Http\Response\ResponseFactory;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use OpenApi\Annotations as OA;
 
@@ -74,13 +75,15 @@ final class UploadPhotoAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var string $userId */
         $userId = $request->getAttribute('oauth_user_id');
-        if (!$file = $request->getUploadedFiles()['file']) {
+        /** @var UploadedFileInterface|null $file */
+        $file = $request->getUploadedFiles()['file'];
+        if (!$file) {
             throw new InvalidArgumentException('File required');
         }
 
         $this->validator->validate($command = new Command($file, $userId));
-
         $this->handler->handle($command);
 
         return $this->response->json([], 204);

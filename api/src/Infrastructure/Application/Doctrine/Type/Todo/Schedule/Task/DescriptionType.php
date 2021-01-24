@@ -7,17 +7,19 @@ namespace Infrastructure\Application\Doctrine\Type\Todo\Schedule\Task;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 use Domain\Model\Todo\Entity\Schedule\Task\Description;
+use JetBrains\PhpStorm\Pure;
 
 final class DescriptionType extends StringType
 {
     public const NAME = 'todo_schedule_task_description';
 
+    #[Pure]
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         return $value instanceof Description ? $value->getValue() : $value;
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?Description
     {
         return !empty($value) ? new Description($value) : null;
     }

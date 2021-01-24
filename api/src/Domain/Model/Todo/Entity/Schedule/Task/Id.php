@@ -18,7 +18,6 @@ final class Id
     public function __construct(string $value)
     {
         Assert::notEmpty($value, 'Task id required');
-        Assert::string($value, 'Task id must be string');
         Assert::uuid($value, 'Task id must be uuid');
         $this->value = $value;
     }

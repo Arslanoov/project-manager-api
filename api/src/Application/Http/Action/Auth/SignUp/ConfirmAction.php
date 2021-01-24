@@ -100,8 +100,10 @@ final class ConfirmAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var array $body */
         $body = json_decode($request->getBody()->getContents(), true);
 
+        /** @var string $token */
         $token = $body['token'] ?? '';
         $user = $this->users->getBySignUpConfirmToken($token);
 

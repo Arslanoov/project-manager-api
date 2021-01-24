@@ -7,17 +7,20 @@ namespace Infrastructure\Application\Doctrine\Type\Todo\Schedule\Task\Step;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\IntegerType;
 use Domain\Model\Todo\Entity\Schedule\Task\Step\SortOrder;
+use JetBrains\PhpStorm\Pure;
 
 final class SortOrderType extends IntegerType
 {
     public const NAME = 'todo_schedule_task_step_sort_order';
 
+    #[Pure]
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         return $value instanceof SortOrder ? $value->getValue() : $value;
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    #[Pure]
+    public function convertToPHPValue($value, AbstractPlatform $platform): SortOrder
     {
         return new SortOrder($value);
     }

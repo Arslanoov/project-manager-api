@@ -17,7 +17,7 @@ final class ClientType extends StringType
         return $value instanceof Client ? $value->getIdentifier() : $value;
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?Client
     {
         if (!empty($value)) {
             $client = new Client($value);

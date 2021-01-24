@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Model\Todo\Entity\Person;
 
+use JetBrains\PhpStorm\Pure;
 use Ramsey\Uuid\Uuid;
 use Webmozart\Assert\Assert;
 
@@ -18,7 +19,6 @@ final class Id
     public function __construct(string $value)
     {
         Assert::notEmpty($value, 'Person id required');
-        Assert::string($value, 'Person id must be string');
         Assert::uuid($value, 'Person id must be uuid');
         $this->value = $value;
     }
@@ -36,6 +36,7 @@ final class Id
         return new self(Uuid::uuid4()->toString());
     }
 
+    #[Pure]
     public function isEqual(Id $id): bool
     {
         return $this->value === $id->getValue();

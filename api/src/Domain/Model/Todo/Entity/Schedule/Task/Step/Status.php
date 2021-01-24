@@ -20,7 +20,6 @@ final class Status
     public function __construct(string $value)
     {
         Assert::notEmpty($value, 'Step status required');
-        Assert::string($value, 'Step status must be string');
         Assert::lengthBetween($value, 4, 16, 'Step status must be between 4 and 16 chars length');
         Assert::oneOf($value, self::statuses(), 'Incorrect step status');
         $this->value = $value;

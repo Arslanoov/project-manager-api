@@ -21,7 +21,7 @@ final class Version20200808125735 extends AbstractMigration
             'Migration can only be executed safely on \'postgresql\'.'
         );
 
-        $this->addSql('CREATE TABLE todo_persons (id UUID NOT NULL, login VARCHAR(255) NOT NULL, ' .git
+        $this->addSql('CREATE TABLE todo_persons (id UUID NOT NULL, login VARCHAR(255) NOT NULL, ' .
             'PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_77550DA2AA08CB10 ON todo_persons (login)');
         $this->addSql('COMMENT ON COLUMN todo_persons.id IS \'(DC2Type:todo_person_id)\'');

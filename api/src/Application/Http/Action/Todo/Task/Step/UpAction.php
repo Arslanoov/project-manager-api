@@ -85,11 +85,14 @@ final class UpAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var array $body */
         $body = json_decode($request->getBody()->getContents(), true);
         $id = intval($body['id'] ?? '');
 
+        /** @var string $userId */
+        $userId = $request->getAttribute('oauth_user_id');
         $step = $this->steps->getById(new Id($id));
-        $this->canUpStep($request->getAttribute('oauth_user_id'), $step);
+        $this->canUpStep($userId, $step);
 
         $this->validator->validate($command = new Command($id));
         $this->handler->handle($command);

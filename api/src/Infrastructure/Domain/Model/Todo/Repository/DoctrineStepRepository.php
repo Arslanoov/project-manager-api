@@ -8,7 +8,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Domain\Exception\Schedule\StepNotFoundException;
+use Domain\Model\Exception\Schedule\StepNotFoundException;
 use Domain\Model\Todo\Entity\Schedule\Task\Step\Id;
 use Domain\Model\Todo\Entity\Schedule\Task\Step\SortOrder;
 use Domain\Model\Todo\Entity\Schedule\Task\Step\Step;

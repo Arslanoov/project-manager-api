@@ -101,16 +101,20 @@ final class GetByDateAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var string $userId */
         $userId = $request->getAttribute('oauth_user_id');
+        /** @var string $day */
         $day = $request->getAttribute('day') ?? '';
+        /** @var string $month */
         $month = $request->getAttribute('month') ?? '';
+        /** @var string $year */
         $year  = $request->getAttribute('year') ?? '';
 
         $person = $this->persons->getById(new Id($userId));
 
         try {
             $schedule = $this->schedules->getDailyByDate($person, new DateTimeImmutable(
-                ($month + 1) . '/' . $day . '/' . $year . ' 00:00:00'
+                (intval($month) + 1) . '/' . $day . '/' . $year . ' 00:00:00'
             ));
         } catch (Exception $e) {
             throw new InvalidArgumentException($e->getMessage());

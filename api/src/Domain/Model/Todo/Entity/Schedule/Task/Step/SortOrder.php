@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Domain\Model\Todo\Entity\Schedule\Task\Step;
 
+use JetBrains\PhpStorm\Pure;
+
 final class SortOrder
 {
-    private ?int $value = null;
+    private ?int $value;
 
     /**
      * SortOrder constructor.
@@ -25,6 +27,7 @@ final class SortOrder
         return $this->value;
     }
 
+    #[Pure]
     public function isEqual(SortOrder $order): bool
     {
         return $this->value === $order->getValue();

@@ -13,7 +13,6 @@ class Id
     public function __construct(int $value)
     {
         Assert::notEmpty($value, 'Step id required');
-        Assert::integer($value, 'Step id must be integer');
         $this->value = $value;
     }
 

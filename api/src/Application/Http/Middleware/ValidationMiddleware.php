@@ -6,6 +6,7 @@ namespace App\Http\Middleware;
 
 use App\Exception\ValidationException;
 use App\Http\Response\ResponseFactory;
+use JetBrains\PhpStorm\Pure;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -45,15 +46,21 @@ final class ValidationMiddleware implements MiddlewareInterface
 
         /** @var ConstraintViolationInterface $violation */
         foreach ($violations as $violation) {
-            $errors[$violation->getPropertyPath()] = $violation->getMessage();
+            /** @var string $message */
+            $message = $violation->getMessage();
+            $errors[$violation->getPropertyPath()] = $message;
         }
 
         return $errors;
     }
 
+    #[Pure]
     private function error(array $violationsArray): string
     {
+        /** @var string $fieldError */
         $fieldError = array_keys($violationsArray)[0];
-        return ucfirst($fieldError) . ' - ' . $violationsArray[$fieldError];
+        /** @var string $error */
+        $error = $violationsArray[$fieldError];
+        return ucfirst($fieldError) . ' - ' . $error;
     }
 }

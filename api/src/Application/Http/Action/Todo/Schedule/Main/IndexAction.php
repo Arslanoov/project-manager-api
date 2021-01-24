@@ -73,7 +73,10 @@ final class IndexAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $person = $this->persons->getById(new Id($request->getAttribute('oauth_user_id') ?? ''));
+        /** @var string $userId */
+        $userId = $request->getAttribute('oauth_user_id') ?? '';
+
+        $person = $this->persons->getById(new Id($userId));
         $schedule = $this->schedules->getPersonMainSchedule($person);
 
         return $this->response->json([
