@@ -35,7 +35,6 @@ final class ConfirmToken
     public function __construct(string $value, DateTimeImmutable $expires)
     {
         Assert::notEmpty($value, 'User confirm token value required');
-        Assert::string($value, 'User confirm token value must be string');
         Assert::lengthBetween($value, 16, 64, 'User confirm token value must be between 16 and 64 chars length');
         Assert::uuid($value, 'User confirm token value must be uuid');
         $this->value = mb_strtolower($value);

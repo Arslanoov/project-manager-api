@@ -17,7 +17,6 @@ final class Password
     public function __construct(string $value)
     {
         Assert::notEmpty($value, 'User password required');
-        Assert::string($value, 'User password must be string');
         $this->value = $value;
     }
 
@@ -36,6 +35,6 @@ final class Password
 
     public function __toString(): string
     {
-        return (string) $this->value;
+        return $this->value;
     }
 }

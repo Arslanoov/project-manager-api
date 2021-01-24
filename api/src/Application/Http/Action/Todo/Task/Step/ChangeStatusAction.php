@@ -70,13 +70,17 @@ final class ChangeStatusAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var array $body */
         $body = json_decode($request->getBody()->getContents(), true);
 
         $id = intval($body['id'] ?? 0);
+        /** @var string $status */
         $status = $body['status'] ?? '';
 
+        /** @var string $userId */
+        $userId = $request->getAttribute('oauth_user_id');
         $step = $this->steps->getById(new Id($id));
-        $this->canChangeStatus($request->getAttribute('oauth_user_id'), $step);
+        $this->canChangeStatus($userId, $step);
 
         $this->validator->validate($command = new Command($id, $status));
         $this->handler->handle($command);

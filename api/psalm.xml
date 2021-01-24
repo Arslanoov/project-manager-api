@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <psalm
         totallyTyped="true"
-        resolveFromConfigFile="true"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="https://getpsalm.org/schema/config"
         xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="src" />
+        <directory name="bin" />
+        <directory name="src/Application" />
+        <directory name="src/Domain" />
+        <directory name="src/Frontend" />
+        <directory name="tests/Builder" />
         <ignoreFiles>
             <directory name="vendor" />
             <directory name="var" />
@@ -15,7 +18,7 @@
     </projectFiles>
 
     <issueHandlers>
-        <MissingConstructor errorLevel="suppress" />
-        <LessSpecificReturnType errorLevel="info" />
+        <UndefinedAttributeClass errorLevel="suppress" />
+        <MixedArgumentTypeCoercion errorLevel="suppress" />
     </issueHandlers>
 </psalm>

@@ -33,6 +33,7 @@ final class IsActiveMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        /** @var string $userId */
         $userId = $request->getAttribute('oauth_user_id');
         if ($user = $this->users->findById(new Id($userId))) {
             if ($user->isDraft()) {

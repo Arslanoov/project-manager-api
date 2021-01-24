@@ -95,15 +95,22 @@ final class CreateAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var array $body */
         $body = json_decode($request->getBody()->getContents(), true);
 
+        /** @var string $scheduleId */
         $scheduleId = $body['schedule_id'] ?? '';
+        /** @var string $name */
         $name = $body['name'] ?? '';
+        /** @var string $description */
         $description = $body['description'] ?? 'Description';
+        /** @var string $level */
         $level = $body['level'] ?? 'Important';
 
+        /** @var string $userId */
+        $userId = $request->getAttribute('oauth_user_id');
         $schedule = $this->schedules->getById(new ScheduleId($scheduleId));
-        $this->canCreateTask($request->getAttribute('oauth_user_id'), $schedule);
+        $this->canCreateTask($userId, $schedule);
 
         $taskId = $this->uuid->uuid1();
 

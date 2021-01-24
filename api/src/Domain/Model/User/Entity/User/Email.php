@@ -17,7 +17,6 @@ final class Email
     public function __construct(string $value)
     {
         Assert::notEmpty($value, 'User email required');
-        Assert::string($value, 'User email must be string');
         Assert::lengthBetween($value, 5, 32, 'User email must be between 5 and 32 chars length');
         Assert::email($value, 'Incorrect email');
         $this->value = $value;
@@ -38,6 +37,6 @@ final class Email
 
     public function __toString(): string
     {
-        return (string) $this->value;
+        return $this->value;
     }
 }

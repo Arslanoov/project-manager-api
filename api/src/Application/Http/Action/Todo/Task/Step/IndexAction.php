@@ -67,10 +67,13 @@ final class IndexAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var string $id */
         $id = $request->getAttribute('id') ?? '';
         $task = $this->tasks->getById(new Id($id));
 
-        $this->canShowTask($request->getAttribute('oauth_user_id'), $task);
+        /** @var string $userId */
+        $userId = $request->getAttribute('oauth_user_id');
+        $this->canShowTask($userId, $task);
 
         $steps = $this->steps->getByTask($task);
 

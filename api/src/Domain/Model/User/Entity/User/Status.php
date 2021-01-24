@@ -26,7 +26,6 @@ final class Status
     public function __construct(string $value)
     {
         Assert::notEmpty($value);
-        Assert::string($value);
         Assert::lengthBetween($value, 4, 7);
         Assert::oneOf($value, self::LIST);
         $this->value = $value;

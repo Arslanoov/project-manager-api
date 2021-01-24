@@ -71,10 +71,13 @@ final class RemoveAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var array $body */
         $body = json_decode($request->getBody()->getContents(), true);
 
+        /** @var string $userId */
         $userId = $request->getAttribute('oauth_user_id');
-        $id = (string) $body['id'] ?? '';
+        /** @var string $id */
+        $id = $body['id'] ?? '';
 
         $schedule = $this->schedules->getById(new Id($id));
         $this->canRemove($userId, $schedule);

@@ -106,12 +106,18 @@ final class RequestAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var array $body */
         $body = json_decode($request->getBody()->getContents(), true);
 
         $id = $this->uuid->uuid1();
+        /** @var string $login */
         $login = $body['login'] ?? '';
+        /** @var string $email */
+        $email = $body['email'] ?? '';
+        /** @var string $password */
+        $password = $body['password'] ?? '';
 
-        $requestCommand = new User\SignUp\Request\Command($id, $login, $body['email'] ?? '', $body['password'] ?? '');
+        $requestCommand = new User\SignUp\Request\Command($id, $login, $email, $password);
         $createPersonCommand = new Person\Create\Command($id, $login);
 
         $this->transaction->begin();

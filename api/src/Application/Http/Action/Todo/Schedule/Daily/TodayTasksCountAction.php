@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Action\Todo\Schedule\Daily;
 
+use Doctrine\Common\Collections\Collection;
 use Domain\Model\Todo\Entity\Person\Id;
 use Domain\Model\Todo\Entity\Person\PersonRepository;
 use Domain\Model\Todo\Entity\Schedule\ScheduleRepository;
@@ -51,11 +52,14 @@ final class TodayTasksCountAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $person = $this->persons->getById(new Id($request->getAttribute('oauth_user_id') ?? ''));
+        /** @var string $userId */
+        $userId = $request->getAttribute('oauth_user_id') ?? '';
+        $person = $this->persons->getById(new Id($userId));
 
         $schedule = $this->schedules->findPersonTodaySchedule($person);
         if ($schedule) {
-            $tasksCount = count($schedule->getTasksCollection()->filter(function (Task $task) {
+            $tasks = $schedule->getTasksCollection();
+            $tasksCount = count($tasks->filter(function (Task $task) {
                 return $task->isNotComplete();
             }));
         } else {

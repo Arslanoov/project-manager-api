@@ -7,7 +7,7 @@ namespace Infrastructure\Domain\Model\Todo\Repository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Domain\Exception\Schedule\ScheduleNotFoundException;
+use Domain\Model\Exception\Schedule\ScheduleNotFoundException;
 use Domain\Model\Todo\Entity\Person\Person;
 use Domain\Model\Todo\Entity\Schedule\Id;
 use Domain\Model\Todo\Entity\Schedule\Schedule;

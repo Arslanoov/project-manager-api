@@ -91,6 +91,7 @@ final class GetTodayAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var string $userId */
         $userId = $request->getAttribute('oauth_user_id');
 
         $person = $this->persons->getById(new Id($userId));

@@ -16,10 +16,10 @@ final class ScopeType extends JsonType
     /**
      * @param mixed $value
      * @param AbstractPlatform $platform
-     * @return false|mixed|string|null
+     * @return mixed
      * @throws ConversionException
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         $data = array_map(function (Scope $entity): ?string {
             return $entity->getIdentifier();
@@ -31,10 +31,10 @@ final class ScopeType extends JsonType
     /**
      * @param mixed $value
      * @param AbstractPlatform $platform
-     * @return array|mixed|null
+     * @return array
      * @throws ConversionException
      */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): array
     {
         $values = parent::convertToPHPValue($value, $platform);
 

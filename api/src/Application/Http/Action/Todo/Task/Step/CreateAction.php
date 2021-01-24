@@ -82,17 +82,21 @@ final class CreateAction implements RequestHandlerInterface
      * @param ServerRequestInterface $request
      * @return ResponseInterface
      * @throws ForbiddenException
-     * @throws DBALException
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var array $body */
         $body = json_decode($request->getBody()->getContents(), true);
 
+        /** @var string $taskId */
         $taskId = $body['task_id'] ?? '';
+        /** @var string $name */
         $name = $body['name'] ?? '';
 
+        /** @var string $userId */
+        $userId = $request->getAttribute('oauth_user_id');
         $task = $this->tasks->getById(new Id($taskId));
-        $this->canCreateStepForTask($request->getAttribute('oauth_user_id'), $task);
+        $this->canCreateStepForTask($userId, $task);
 
         $stepId = $this->steps->getNextId();
         $this->validator->validate($command = new Command($stepId->getValue(), $taskId, $name));

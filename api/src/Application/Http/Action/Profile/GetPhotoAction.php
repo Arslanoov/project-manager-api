@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Action\Profile;
 
-use Domain\Exception\Person\BackgroundPhotoNotFound;
+use Domain\Model\Exception\Person\BackgroundPhotoNotFound;
 use Domain\Model\Todo\Entity\Person\BackgroundPhoto;
 use Domain\Model\Todo\Entity\Person\Id;
 use Domain\Model\Todo\Entity\Person\PersonRepository;
@@ -60,7 +60,9 @@ final class GetPhotoAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $person = $this->persons->getById(new Id($request->getAttribute('oauth_user_id')));
+        /** @var string $userId */
+        $userId = $request->getAttribute('oauth_user_id');
+        $person = $this->persons->getById(new Id($userId));
         if (!$person->hasBackgroundPhoto() or $person->getBackgroundPhoto() === null) {
             throw new BackgroundPhotoNotFound();
         }

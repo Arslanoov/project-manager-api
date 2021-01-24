@@ -100,7 +100,9 @@ final class GetPreviousScheduleAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var string $userId */
         $userId = $request->getAttribute('oauth_user_id');
+        /** @var string $scheduleId */
         $scheduleId = $request->getAttribute('id') ?? '';
 
         $schedule = $this->schedules->getById(new ScheduleId($scheduleId));
