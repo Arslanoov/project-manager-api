@@ -83,7 +83,7 @@ final class CreateAction implements RequestHandlerInterface
      *             @OA\Property(property="id", type="string"),
      *             @OA\Property(property="name", type="string"),
      *             @OA\Property(property="description", type="string"),
-     *             @OA\Property(property="level", type="string"),
+     *             @OA\Property(property="importantLevel", type="string"),
      *             @OA\Property(property="status", type="string")
      *         )
      *     ),
@@ -129,7 +129,7 @@ final class CreateAction implements RequestHandlerInterface
             'id' => $task->getId()->getValue(),
             'name' => $task->getName()->getValue(),
             'description' => $task->getDescription()->getValue(),
-            'level' => $task->getLevel()->getValue(),
+            'importantLevel' => $task->getLevel()->getValue(),
             'status' => $task->getStatus()->getValue()
         ]);
     }
