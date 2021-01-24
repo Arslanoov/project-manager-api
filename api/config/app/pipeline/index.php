@@ -16,7 +16,7 @@ return static function (ApplicationInterface $app): void {
     $app->pipe('/api/todo', Middleware\AuthMiddleware::class);
     $app->pipe('/api/profile', Middleware\AuthMiddleware::class);
     $app->pipe('/api/todo', Middleware\IsActiveMiddleware::class);
-    $app->pipe(Middleware\InvalidArgumentHandler::class);
     $app->pipe(Middleware\ErrorHandler::class);
+    $app->pipe(Middleware\InvalidArgumentHandler::class);
     $app->pipe(FrameworkMiddleware\DispatchMiddleware::class);
 };
