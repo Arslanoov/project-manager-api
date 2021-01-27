@@ -8,8 +8,8 @@ use Webmozart\Assert\Assert;
 
 final class Status
 {
-    private const STATUS_NOT_COMPLETE = 'Not Complete';
-    private const STATUS_COMPLETE = 'Complete';
+    public const STATUS_NOT_COMPLETE = 'Not Complete';
+    public const STATUS_COMPLETE = 'Complete';
 
     private string $value;
 
