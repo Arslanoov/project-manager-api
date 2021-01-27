@@ -49,5 +49,6 @@ return static function (ApplicationInterface $app): void {
     $app->patch('api.todo.main.task.steps.up', '/api/todo/task/step/up', Action\Todo\Task\Step\UpAction::class);
     $app->patch('api.todo.main.task.steps.down', '/api/todo/task/step/down', Action\Todo\Task\Step\DownAction::class);
     $app->patch('api.todo.main.task.steps.change.status', '/api/todo/task/step/change-status', Action\Todo\Task\Step\ChangeStatusAction::class);
+    $app->patch('api.todo.main.task.steps.change.status.list', '/api/todo/task/step/change-status/list', Action\Todo\Task\Step\ChangeStatusListAction::class);
     $app->delete('api.todo.main.task.steps.remove', '/api/todo/task/step/remove', Action\Todo\Task\Step\RemoveAction::class);
 };
