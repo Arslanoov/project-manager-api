@@ -150,12 +150,36 @@ final class DoctrineScheduleRepository implements ScheduleRepository
         return $schedule;
     }
 
+    public function findNextWeekSchedule(Person $person, Schedule $schedule): ?Schedule
+    {
+        /** @var Schedule $schedule */
+        $schedule = $this->schedules->findOneBy([
+            'person' => $person,
+            'date' => $schedule->getDate()->modify('+7 day'),
+            'type' => Type::daily()
+        ]);
+
+        return $schedule;
+    }
+
     public function findPreviousSchedule(Person $person, Schedule $schedule): ?Schedule
     {
         /** @var Schedule $schedule */
         $schedule = $this->schedules->findOneBy([
             'person' => $person,
             'date' => $schedule->getDate()->modify('-1 day'),
+            'type' => Type::daily()
+        ]);
+
+        return $schedule;
+    }
+
+    public function findPreviousWeekSchedule(Person $person, Schedule $schedule): ?Schedule
+    {
+        /** @var Schedule $schedule */
+        $schedule = $this->schedules->findOneBy([
+            'person' => $person,
+            'date' => $schedule->getDate()->modify('-7 day'),
             'type' => Type::daily()
         ]);
 

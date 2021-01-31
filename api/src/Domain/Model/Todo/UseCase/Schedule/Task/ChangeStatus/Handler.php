@@ -30,11 +30,11 @@ final class Handler
     public function handle(Command $command): void
     {
         $task = $this->tasks->getById(new Id($command->id));
-        if ($command->status === Status::STATUS_COMPLETE) {
+        /*if ($command->status === Status::STATUS_COMPLETE) {
             $task->getStepsCollection()->map(
                 fn (Step $step) => $step->changeStatus(new StepStatus(StepStatus::STATUS_COMPLETE))
             );
-        }
+        }*/
 
         $task->changeStatus(new Status($command->status));
 
