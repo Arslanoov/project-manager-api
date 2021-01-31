@@ -28,7 +28,9 @@ return static function (ApplicationInterface $app): void {
     $app->get('api.todo.daily.today', '/api/todo/daily/today', Action\Todo\Schedule\Daily\GetTodayAction::class);
     $app->get('api.todo.daily.today.tasks.count', '/api/todo/daily/today/tasks/count', Action\Todo\Schedule\Daily\TodayTasksCountAction::class);
     $app->get('api.todo.daily.next', '/api/todo/daily/next/{id}', Action\Todo\Schedule\Daily\GetNextScheduleAction::class);
+    $app->get('api.todo.daily.next.week', '/api/todo/daily/next-week/{id}', Action\Todo\Schedule\Daily\GetNextWeekScheduleAction::class);
     $app->get('api.todo.daily.previous', '/api/todo/daily/previous/{id}', Action\Todo\Schedule\Daily\GetPreviousScheduleAction::class);
+    $app->get('api.todo.daily.previous.week', '/api/todo/daily/previous-week/{id}', Action\Todo\Schedule\Daily\GetPreviousWeekScheduleAction::class);
     $app->get('api.todo.daily.get-by-date', '/api/todo/daily/get-by-date/{day}/{month}/{year}', Action\Todo\Schedule\Daily\GetByDateAction::class);
 
     // Custom schedule

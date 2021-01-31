@@ -39,7 +39,11 @@ interface ScheduleRepository
 
     public function findNextSchedule(Person $person, Schedule $schedule): ?Schedule;
 
+    public function findNextWeekSchedule(Person $person, Schedule $schedule): ?Schedule;
+
     public function findPreviousSchedule(Person $person, Schedule $schedule): ?Schedule;
+
+    public function findPreviousWeekSchedule(Person $person, Schedule $schedule): ?Schedule;
 
     public function findPersonTodaySchedule(Person $person): ?Schedule;
 
