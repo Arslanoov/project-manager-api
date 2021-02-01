@@ -61,6 +61,7 @@ final class IndexAction implements RequestHandlerInterface
      *                     @OA\Property(property="status", type="string"),
      *                     @OA\Property(property="stepsCount", type="integer"),
      *                     @OA\Property(property="finishedSteps", type="integer")
+     *                     @OA\Property(property="isMain", type="boolean")
      *                 )),
      *                 @OA\Property(property="tasksCount", type="integer")
      *             ))
@@ -82,7 +83,8 @@ final class IndexAction implements RequestHandlerInterface
         return $this->response->json([
             'id' => $schedule->getId()->getValue(),
             'tasks' => $this->tasks($schedule),
-            'tasksCount' => $schedule->getTasksCount()
+            'tasksCount' => $schedule->getTasksCount(),
+            'isMain' => true
         ]);
     }
 
