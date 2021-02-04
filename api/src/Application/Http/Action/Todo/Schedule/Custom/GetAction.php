@@ -77,6 +77,7 @@ final class GetAction implements RequestHandlerInterface
      *                 @OA\Property(property="status", type="string"),
      *                 @OA\Property(property="stepsCount", type="integer"),
      *                 @OA\Property(property="finishedSteps", type="integer")
+     *                 @OA\Property(property="isCustom", type="boolean")
      *             )),
      *             @OA\Property(property="tasksCount", type="integer")
      *         )
@@ -103,7 +104,8 @@ final class GetAction implements RequestHandlerInterface
             'id' => $schedule->getId()->getValue(),
             'name' => $schedule->getName()->getValue(),
             'tasks' => $this->tasks($schedule),
-            'tasksCount' => $schedule->getTasksCount()
+            'tasksCount' => $schedule->getTasksCount(),
+            'isCustom' => true
         ]);
     }
 
