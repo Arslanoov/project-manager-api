@@ -7,6 +7,7 @@ namespace App\Http\Action\Todo\Schedule\Daily;
 use App\Exception\ForbiddenException;
 use App\Service\Date;
 use App\Validation\Validator;
+use Domain\Model\Exception\DomainException;
 use Domain\Model\Todo\Entity\Person\PersonRepository;
 use Domain\Model\Todo\Entity\Schedule\Id as ScheduleId;
 use Domain\Model\Todo\Entity\Person\Id as PersonId;
@@ -108,6 +109,9 @@ final class GetNextScheduleAction implements RequestHandlerInterface
         $schedule = $this->schedules->getById(new ScheduleId($scheduleId));
         $person = $this->persons->getById(new PersonId($userId));
         $this->canGetNext($userId, $schedule);
+        if (!$schedule->isDaily()) {
+            throw new DomainException('Schedule is not daily');
+        }
 
         $nextSchedule = $this->schedules->findNextSchedule($person, $schedule);
         if (!$nextSchedule) {
