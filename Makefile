@@ -33,6 +33,9 @@ generate-private-key:
 generate-public-key:
 	docker-compose run --rm api-php-cli openssl rsa -in private.key -pubout -out public.key
 
+migrate:
+	docker-compose run --rm api-php-cli php bin/console migrations:migrate
+
 set-project-permissions:
 	docker-compose run --rm api-php-cli chmod -R 777 var
 set-keys-permissions:
