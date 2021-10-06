@@ -1,4 +1,4 @@
-<h2 align="center">Todo App API</h2>
+<h2 align="center">Task Manager API</h2>
 <p align="center">
     <img width="150px" src="https://user-images.githubusercontent.com/51407990/121008038-f5141080-c7ab-11eb-8c5c-3865e09c6bf1.jpg" />
 </p>
