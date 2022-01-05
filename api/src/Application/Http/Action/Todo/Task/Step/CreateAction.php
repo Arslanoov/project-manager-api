@@ -103,7 +103,8 @@ final class CreateAction implements RequestHandlerInterface
         $this->handler->handle($command);
 
         return $this->response->json([
-            'id' => $stepId->getValue()
+            'id' => $stepId->getValue(),
+            'name' => $name
         ], 201);
     }
 

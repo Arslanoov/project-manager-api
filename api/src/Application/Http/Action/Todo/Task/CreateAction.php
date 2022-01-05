@@ -130,7 +130,9 @@ final class CreateAction implements RequestHandlerInterface
             'name' => $task->getName()->getValue(),
             'description' => $task->getDescription()->getValue(),
             'importantLevel' => $task->getLevel()->getValue(),
-            'status' => $task->getStatus()->getValue()
+            'status' => $task->getStatus()->getValue(),
+            'stepsCount' => 0,
+            'finishedSteps' => 0
         ]);
     }
 

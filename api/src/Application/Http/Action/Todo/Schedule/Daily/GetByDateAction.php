@@ -12,6 +12,8 @@ use Domain\Model\Todo\Entity\Person\PersonRepository;
 use Domain\Model\Todo\Entity\Schedule\Schedule;
 use Domain\Model\Todo\Entity\Schedule\ScheduleRepository;
 use Domain\Model\Todo\Entity\Schedule\Task\Task;
+use Domain\Model\Todo\UseCase\Schedule\CreateByDate\Command;
+use Domain\Model\Todo\UseCase\Schedule\CreateByDate\Handler;
 use Exception;
 use App\Http\Response\ResponseFactory;
 use InvalidArgumentException;
@@ -19,23 +21,34 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class GetByDateAction implements RequestHandlerInterface
 {
     private ScheduleRepository $schedules;
     private PersonRepository $persons;
+    private ValidatorInterface $validator;
+    private Handler $handler;
     private ResponseFactory $response;
 
     /**
-     * GetByDateAction constructor.
      * @param ScheduleRepository $schedules
      * @param PersonRepository $persons
+     * @param ValidatorInterface $validator
+     * @param Handler $handler
      * @param ResponseFactory $response
      */
-    public function __construct(ScheduleRepository $schedules, PersonRepository $persons, ResponseFactory $response)
-    {
+    public function __construct(
+        ScheduleRepository $schedules,
+        PersonRepository $persons,
+        ValidatorInterface $validator,
+        Handler $handler,
+        ResponseFactory $response
+    ) {
         $this->schedules = $schedules;
         $this->persons = $persons;
+        $this->validator = $validator;
+        $this->handler = $handler;
         $this->response = $response;
     }
 
@@ -113,9 +126,14 @@ final class GetByDateAction implements RequestHandlerInterface
         $person = $this->persons->getById(new Id($userId));
 
         try {
-            $schedule = $this->schedules->getDailyByDate($person, new DateTimeImmutable(
-                (intval($month) + 1) . '/' . $day . '/' . $year . ' 00:00:00'
-            ));
+            $date = new DateTimeImmutable((intval($month) + 1) . '/' . $day . '/' . $year . ' 00:00:00');
+            $schedule = $this->schedules->findDailyByDate($person, $date);
+
+            if (!$schedule) {
+                $this->validator->validate($command = new Command($date, $userId));
+                $this->handler->handle($command);
+                $schedule = $this->schedules->findDailyByDate($person, $date);
+            }
         } catch (Exception $e) {
             throw new InvalidArgumentException($e->getMessage());
         }

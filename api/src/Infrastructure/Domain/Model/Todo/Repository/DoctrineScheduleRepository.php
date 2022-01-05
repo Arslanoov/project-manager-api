@@ -103,15 +103,25 @@ final class DoctrineScheduleRepository implements ScheduleRepository
         return $schedule;
     }
 
+    /**
+     * With main schedule
+     * @param Person $person
+     * @return array
+     */
     public function getPersonCustomSchedules(Person $person): array
     {
+        $mainSchedule = $this->schedules->findBy([
+            'person' => $person,
+            'type' => Type::main()
+        ]);
+
         /** @var array|Schedule[] $schedules */
         $schedules = $this->schedules->findBy([
             'person' => $person,
             'type' => Type::custom()
         ]);
 
-        return $schedules;
+        return array_merge($mainSchedule, $schedules);
     }
 
     // Main
