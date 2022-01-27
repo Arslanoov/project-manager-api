@@ -6,8 +6,8 @@ namespace App\Http\Action\Todo\Task\Step;
 
 use App\Exception\ForbiddenException;
 use App\Validation\Validator;
-use Doctrine\DBAL\DBALException;
 use Domain\Model\Todo\Entity\Schedule\Task\Id;
+use Domain\Model\Todo\Entity\Schedule\Task\Step\Status;
 use Domain\Model\Todo\Entity\Schedule\Task\Step\StepRepository;
 use Domain\Model\Todo\Entity\Schedule\Task\Task;
 use Domain\Model\Todo\Entity\Schedule\Task\TaskRepository;
@@ -104,7 +104,8 @@ final class CreateAction implements RequestHandlerInterface
 
         return $this->response->json([
             'id' => $stepId->getValue(),
-            'name' => $name
+            'name' => $name,
+            'status' => Status::STATUS_NOT_COMPLETE
         ], 201);
     }
 

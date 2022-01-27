@@ -126,7 +126,7 @@ final class GetByDateAction implements RequestHandlerInterface
         $person = $this->persons->getById(new Id($userId));
 
         try {
-            $date = new DateTimeImmutable((intval($month) + 1) . '/' . $day . '/' . $year . ' 00:00:00');
+            $date = new DateTimeImmutable((intval($month)) . '/' . $day . '/' . $year . ' 00:00:00');
             $schedule = $this->schedules->findDailyByDate($person, $date);
 
             if (!$schedule) {
