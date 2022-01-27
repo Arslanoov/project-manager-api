@@ -73,7 +73,7 @@ final class IndexAction implements RequestHandlerInterface
                 'id' => $schedule->getId()->getValue(),
                 'name' => $schedule->getName()->getValue(),
                 'tasksCount' => $schedule->getTasksCount(),
-                'isCustom' => true
+                'isCustom' => $schedule->isCustom()
             ];
         }, $schedules);
     }

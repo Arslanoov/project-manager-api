@@ -91,7 +91,7 @@ class Schedule
             $id,
             $person,
             new DateTimeImmutable('today'),
-            new Name('Main list'),
+            new Name('Personal'),
             Type::main()
         );
     }

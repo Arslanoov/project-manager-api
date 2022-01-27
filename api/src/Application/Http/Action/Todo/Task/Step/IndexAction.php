@@ -79,6 +79,13 @@ final class IndexAction implements RequestHandlerInterface
 
         return $this->response->json([
             'id' => $task->getId()->getValue(),
+            'projectName' => $task->getSchedule()->getName()->getValue(),
+            'name' => $task->getName()->getValue(),
+            'description' => $task->getLevel()->getValue(),
+            'importantLevel' => $task->getLevel()->getValue(),
+            'status' => $task->getStatus()->getValue(),
+            'stepsCount' => $task->getStepsCollection()->count(),
+            'finishedSteps' => $task->getFinishedSteps(),
             'steps' => $this->steps($steps)
         ]);
     }

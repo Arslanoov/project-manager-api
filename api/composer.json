@@ -1,11 +1,11 @@
 {
-    "name": "arslanoov/todo-backend",
+    "name": "arslanoov/task-manager-api",
     "type": "project",
     "license": "MIT",
     "authors": [
         {
             "name": "Arslanoov",
-            "email": "rasularslanoov@gmail.com"
+            "email": "rasul@arslanoov.red"
         }
     ],
     "config": {
